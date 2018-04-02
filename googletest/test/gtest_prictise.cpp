@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include <stack>
 
+#define MAX(a,b) (a) > (b) ? (a) : (b)
+
 using namespace std;
 
 class Reverse_Polish_Notation {
@@ -237,32 +239,40 @@ TEST(Leetcode, Add_Two_Numbers)
 
 class Solution_lengthOfLongestSubstring {
 public:
-	int lengthOfLongestSubstring(string s) {
-		set<int> setdata;
-
-		bool bflag = true;
-		map<int, char> mapdata;
+	int lengthOfLongestSubstring1(string s) {
+		set<char> setdata;		
 		int nlen = s.length();
-		if (nlen == 0 || nlen == 1)
-			return nlen;
-		int max = 1;
-		for (int i = 0; i < nlen; i++)
+		int max = 0;
+		int i = 0;
+		int j = 0;
+		// try to extend the range [i, j]
+		while(i < nlen && j < nlen)
 		{
-			if (mapdata.find(s[i]) != mapdata.end())
+			if (setdata.find(s[j]) != setdata.end())
 			{
-				int ntmp = i - mapdata[s[i]];
-				max = max > ntmp ? max : ntmp;
-				mapdata[s[i]] = i;
-				bflag = false;
+				setdata.erase(s[i++]);
 			}
 			else
 			{
-				mapdata[s[i]] = i;
+				setdata.insert(s[j++]);
+				max = max > j - i ? max : j - i;
 			}
 		}
-		if (bflag)
+		return max;
+	}
+	int lengthOfLongestSubstring2(string s) {
+		int nlen = s.length();
+		int max = 0;
+		map<char, int> mapdata;
+		for (int j = 0, i = 0; j < nlen; j++)
 		{
-			return nlen;
+			if (mapdata.find(s[j]) != mapdata.end())
+			{
+				i = MAX(mapdata[s[j]], j);
+			}
+			mapdata[s[j]] = j + 1;
+			max = MAX(max, j - i + 1);
+				
 		}
 		return max;
 	}
@@ -271,10 +281,10 @@ public:
 TEST(Leetcode, lengthOfLongestSubstring)
 {
 	Solution_lengthOfLongestSubstring su;
-	cout << su.lengthOfLongestSubstring("abcabcbb")<<endl;
-	cout << su.lengthOfLongestSubstring("bbbbb") << endl;
-	cout << su.lengthOfLongestSubstring("pwwkew") << endl;
-	cout << su.lengthOfLongestSubstring("aab") << endl;
+	cout << su.lengthOfLongestSubstring2("abcabcbb")<<endl;
+	cout << su.lengthOfLongestSubstring2("bbbbb") << endl;
+	cout << su.lengthOfLongestSubstring2("pwwkew") << endl;
+	cout << su.lengthOfLongestSubstring2("aab") << endl;
 
 }
 
