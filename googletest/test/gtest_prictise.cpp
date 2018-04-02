@@ -170,3 +170,67 @@ TEST(Leetcode, twoSum)
 	cout << res[0]<< endl;
 	cout << res[1] << endl;
 }
+
+
+
+struct ListNode {
+	int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {}
+};
+
+//Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+//	Output : 7 -> 0 -> 8
+//	Explanation : 342 + 465 = 807.
+
+class SolutionAdd_Two_Numbers {
+public:
+	ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+		ListNode *Node1 = l1;
+		ListNode *Node2 = l2;
+		ListNode *NewNode = new ListNode(0);
+		ListNode *TempNode = NewNode;
+		bool bflag = false;
+		int Data = 0;
+		while (Node1 || Node2)
+		{
+			int Data1 = 0;
+			int Data2 = 0;
+			if (Node1)
+				Data1 = Node1->val;
+			if (Node2)
+				Data2 = Node2->val;
+			Data = Data1 + Data2;
+			if (bflag)
+				Data++;
+			if (Data > 9)
+				bflag = true;
+			else
+				bflag = false;
+
+			TempNode->val = Data % 10;
+
+			TempNode->next = new ListNode(0);
+
+			TempNode = TempNode->next;
+			if (Node1)
+			{
+				Node1 = Node1->next;
+			}
+
+			if (Node2)
+			{
+				Node2 = Node2->next;
+			}
+		}
+		if (bflag)
+			TempNode->val = Data;
+		return NewNode;
+	}
+};
+
+TEST(Leetcode, Add_Two_Numbers)
+{
+	SolutionAdd_Two_Numbers su;
+	su.addTwoNumbers(NULL, NULL);
+}
