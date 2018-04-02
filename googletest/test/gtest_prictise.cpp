@@ -110,3 +110,63 @@ TEST(Leetcode, Longest_Valid_Parentheses)
 	cout << lvp.longestValidParentheses2(")()())()()(") << endl;
 
 }
+
+class SolutiontwoSum {
+public:
+	vector<int> twoSum1(vector<int>& nums, int target) {
+		map<int, int>MapSum;
+		map<int, int>::iterator Mapiter;
+		vector<int> VecRes;
+		int nSize = nums.size();
+		for (size_t i = 0; i < nSize; i++)
+		{
+			MapSum[nums[i]] = i;
+		}
+
+		for (size_t i = 0; i < nSize; i++)
+		{
+			int ntemp = target - nums[i];
+			Mapiter = MapSum.find(ntemp);
+			if (Mapiter != MapSum.end() && MapSum[ntemp] != i)
+			{
+				VecRes.push_back(i);
+				VecRes.push_back(MapSum[ntemp]);
+				return VecRes;
+			}
+		}
+		return VecRes;
+	}
+	vector<int> twoSum2(vector<int>& nums, int target) {
+		vector<int> VecRes;
+		map<int, int>MapNum;
+		int nSize = nums.size();
+		for (int i = 0; i < nSize; i++)
+		{
+			int ntemp = target - nums[i];
+			if (MapNum.find(ntemp) != MapNum.end() && i != MapNum[ntemp])
+			{
+				VecRes.push_back(i);
+				VecRes.push_back(MapNum[ntemp]);
+			}
+			MapNum[nums[i]] = i;
+		}
+		return VecRes;
+	}
+};
+
+//Given nums = [2, 7, 11, 15], target = 9,
+//
+//Because nums[0] + nums[1] = 2 + 7 = 9,
+//return[0, 1].
+
+TEST(Leetcode, twoSum)
+{
+	int Array[] = { -1, -2, -3, -4, -5 };
+	vector<int> VecNum(Array, Array + 5);
+
+	SolutiontwoSum su;
+	//vector<int> res = su.twoSum1(VecNum, -8);
+	vector<int> res = su.twoSum2(VecNum, -8);
+	cout << res[0]<< endl;
+	cout << res[1] << endl;
+}
