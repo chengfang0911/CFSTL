@@ -234,3 +234,47 @@ TEST(Leetcode, Add_Two_Numbers)
 	SolutionAdd_Two_Numbers su;
 	su.addTwoNumbers(NULL, NULL);
 }
+
+class Solution_lengthOfLongestSubstring {
+public:
+	int lengthOfLongestSubstring(string s) {
+		set<int> setdata;
+
+		bool bflag = true;
+		map<int, char> mapdata;
+		int nlen = s.length();
+		if (nlen == 0 || nlen == 1)
+			return nlen;
+		int max = 1;
+		for (int i = 0; i < nlen; i++)
+		{
+			if (mapdata.find(s[i]) != mapdata.end())
+			{
+				int ntmp = i - mapdata[s[i]];
+				max = max > ntmp ? max : ntmp;
+				mapdata[s[i]] = i;
+				bflag = false;
+			}
+			else
+			{
+				mapdata[s[i]] = i;
+			}
+		}
+		if (bflag)
+		{
+			return nlen;
+		}
+		return max;
+	}
+};
+
+TEST(Leetcode, lengthOfLongestSubstring)
+{
+	Solution_lengthOfLongestSubstring su;
+	cout << su.lengthOfLongestSubstring("abcabcbb")<<endl;
+	cout << su.lengthOfLongestSubstring("bbbbb") << endl;
+	cout << su.lengthOfLongestSubstring("pwwkew") << endl;
+	cout << su.lengthOfLongestSubstring("aab") << endl;
+
+}
+
