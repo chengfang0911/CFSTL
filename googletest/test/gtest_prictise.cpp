@@ -288,3 +288,82 @@ TEST(Leetcode, lengthOfLongestSubstring)
 
 }
 
+class CTString
+{
+public:
+	CTString():m_pbuf(NULL), m_nLen(0){}
+	CTString(char *buf, int len)
+	{
+		m_nLen = len;
+		m_pbuf = new char[len + 1];
+		if (m_pbuf)
+		{
+			memset(m_pbuf, 0, len + 1);
+			strcpy(m_pbuf, buf);
+		}
+	}
+	CTString(const CTString& str)
+	{
+		m_pbuf = new char[str.m_nLen + 1];
+		if (m_pbuf)
+		{
+			memset(m_pbuf, 0, str.m_nLen + 1);
+			strcpy(m_pbuf, str.m_pbuf);
+		}
+	}
+	/*
+	void operator=(const CTString &str)
+	{
+		if (&str == this)
+		{
+			return;
+		}
+		if (m_pbuf)
+		{
+			delete[]m_pbuf;
+			m_nLen = 0;
+		}
+		m_pbuf = new char[str.m_nLen + 1];
+		if (m_pbuf)
+		{
+			memset(m_pbuf, 0, str.m_nLen + 1);
+			strcpy(m_pbuf, str.m_pbuf);
+		}
+	}
+	*/
+	CTString & operator=(const CTString &str)
+	{
+		if (&str == this)
+		{
+			return *this;
+		}
+		if (m_pbuf)
+		{
+			delete[]m_pbuf;
+			m_nLen = 0;
+		}
+		m_pbuf = new char[str.m_nLen + 1];
+		if (m_pbuf)
+		{
+			memset(m_pbuf, 0, str.m_nLen + 1);
+			strcpy(m_pbuf, str.m_pbuf);
+		}
+		return *this;
+	}
+private:
+	char *m_pbuf;
+	int m_nLen;
+};
+
+TEST(Leetcode, TestCopy)
+{
+	CTString a("1111", 4);
+	CTString b;
+	CTString c;
+	a = a;
+	//c = b = a;  如果赋值函数返回的不是引用 这种表达式不能使用。
+	c = b = a;
+	int bb;
+}
+
+
