@@ -281,10 +281,16 @@ public:
 TEST(Leetcode, lengthOfLongestSubstring)
 {
 	Solution_lengthOfLongestSubstring su;
-	cout << su.lengthOfLongestSubstring2("abcabcbb")<<endl;
-	cout << su.lengthOfLongestSubstring2("bbbbb") << endl;
-	cout << su.lengthOfLongestSubstring2("pwwkew") << endl;
-	cout << su.lengthOfLongestSubstring2("aab") << endl;
+
+	EXPECT_EQ(su.lengthOfLongestSubstring1("abcabcbb"), 3);
+	EXPECT_EQ(su.lengthOfLongestSubstring1("bbbbb"), 1);
+	EXPECT_EQ(su.lengthOfLongestSubstring1("pwwkew"), 3);
+	EXPECT_EQ(su.lengthOfLongestSubstring1("aab"), 2);
+
+	EXPECT_EQ(su.lengthOfLongestSubstring2("abcabcbb"), 3);
+	EXPECT_EQ(su.lengthOfLongestSubstring2("bbbbb"), 1);
+	EXPECT_EQ(su.lengthOfLongestSubstring2("pwwkew"), 3);
+	EXPECT_EQ(su.lengthOfLongestSubstring2("aab"), 2);
 
 }
 
