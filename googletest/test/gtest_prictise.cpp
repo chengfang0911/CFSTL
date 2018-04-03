@@ -372,4 +372,59 @@ TEST(Leetcode, TestCopy)
 	int bb;
 }
 
+class Solution_findMedianSortedArrays {
+public:
+	double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+		double ret = 0.0f;
+		int i = 0;
+		int size1 = nums1.size();
+		int j = 0;
+		int size2 = nums2.size();
+		vector<int> VesRes;
+		while (i < size1 && j <size2)
+		{
+			if (nums1[i] <= nums2[j])
+			{
+				VesRes.push_back(nums1[i++]);
+			}
+			else
+			{
+				VesRes.push_back(nums2[j++]);
+			}
+		}
+		while (i < size1)
+		{
+			VesRes.push_back(nums1[i++]);
+		}
+		while (j < size2)
+		{
+			VesRes.push_back(nums2[j++]);
+		}
+		int nVesSize = VesRes.size();
+		if (nVesSize % 2 == 0)
+		{
+			ret = (VesRes[nVesSize / 2] + VesRes[nVesSize / 2 - 1]) / 2.0f;
+		}
+		else
+		{
+			ret = VesRes[nVesSize / 2];
+		}
+		return ret;
+	}
+};
 
+TEST(Leetcode, findMedianSortedArrays)
+{
+	int arr1[] = { 1, 2 };
+	int arr2[] = { 3, 4 };
+	vector<int> VecArr1(arr1, arr1 + sizeof(arr1) / sizeof(int));
+	vector<int> VecArr2(arr2, arr2 + sizeof(arr2) / sizeof(int));
+
+
+	Solution_findMedianSortedArrays su;
+
+
+
+	EXPECT_EQ(su.findMedianSortedArrays(VecArr1, VecArr2), 2.5);
+
+}
