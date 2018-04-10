@@ -420,11 +420,50 @@ TEST(Leetcode, findMedianSortedArrays)
 	vector<int> VecArr1(arr1, arr1 + sizeof(arr1) / sizeof(int));
 	vector<int> VecArr2(arr2, arr2 + sizeof(arr2) / sizeof(int));
 
-
 	Solution_findMedianSortedArrays su;
-
-
-
 	EXPECT_EQ(su.findMedianSortedArrays(VecArr1, VecArr2), 2.5);
+}
 
+class Solution_longestPalindrome {
+public:
+	string longestPalindrome(string s) {
+		string tmp;
+		string maxstr;
+		for (size_t i = 0; i < s.length(); i++)
+		{
+			
+			for (size_t j = i; j < s.length(); j++)
+			{
+				tmp = s.substr(i, j - i + 1);
+				if (tmp.length() > maxstr.length() && IsPalindrome(tmp))
+				{
+					maxstr = tmp;
+				}
+			}
+
+		}
+		return maxstr;
+	}
+	bool IsPalindrome(string s)
+	{
+		int l = 0;
+		int r = s.length() - 1;
+		while (l <= r && s[l] == s[r])
+		{
+			l++;
+			r--;
+		}
+		if (l > r)
+		{
+			return true;
+		}
+		return false;
+	}
+};
+
+TEST(Leetcode, longestPalindrome)
+{
+	Solution_longestPalindrome su;
+	EXPECT_EQ(su.longestPalindrome("babad"), "bab");
+	EXPECT_EQ(su.longestPalindrome("cbbd"), "bb");
 }
