@@ -467,3 +467,66 @@ TEST(Leetcode, longestPalindrome)
 	EXPECT_EQ(su.longestPalindrome("babad"), "bab");
 	EXPECT_EQ(su.longestPalindrome("cbbd"), "bb");
 }
+
+
+class Solution_Zig {
+public:
+    string convert(string s, int numRows) {
+        char **Array;
+        int nIndex = 0;
+        int i = 0;
+        int j = 0;
+        bool dir = 1;
+        Array = new char*[numRows];
+        for(int i = 0; i < s.length(); i++)
+        {
+        	Array[i] = new char[s.length()];
+        	memset(Array[i], 0, s.length());
+        } 
+     
+	     for(nIndex=0; nIndex < s.length(); nIndex++)
+	     {
+	     		if(dir)
+	   			{
+	   				Array[i][j] = s[nIndex];
+						j++;
+	   			}	
+	   			if(j == numRows )
+	 				{
+	 					j--;
+	 					dir = 0;
+	 					continue;
+	 				}
+					if(!dir)
+					{	
+						i++;
+						j--;
+	 					Array[i][j] = s[nIndex];
+	 				}
+	 				if(j == 0)
+					{
+						dir = 1;
+						i--;
+						continue;
+					}
+	     } 
+	     string outs;
+	     nIndex = 0;  
+	     for(int m = 0; m < numRows; m++)
+	     {
+	     		for(int n = 0; n < s.length(); n++)
+	     		{
+	     			if(Array[m][n] != 0)
+	     				outs[nIndex] = Array[m][n];
+	     		}		
+	     }
+        
+       return outs;
+    }
+};
+
+TEST(Leetcode, Zig)
+{
+	Solution_Zig su;
+	EXPECT_EQ(su.convert("PAYPALISHIRING", 3), "PAHNAPLSIIGYIR");
+}
