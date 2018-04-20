@@ -14,10 +14,7 @@
     <ClCompile Include="..\..\test\gtest_unittest.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\gtest_vector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\gtest_prictise.cpp">
+    <ClCompile Include="..\..\samples\gtest_prictise.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

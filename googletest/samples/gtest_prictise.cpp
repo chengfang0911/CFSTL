@@ -517,7 +517,7 @@ public:
 	     		for(int n = 0; n < s.length(); n++)
 	     		{
 	     			if(Array[m][n] != 0)
-	     				outs[nIndex] = Array[m][n];
+	     				outs.push_back(Array[m][n]);
 	     		}		
 	     }
         
