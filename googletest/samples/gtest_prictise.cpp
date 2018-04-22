@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include <stack>
+#include <limits>
 
 #define MAX(a,b) (a) > (b) ? (a) : (b)
 
@@ -424,104 +425,84 @@ TEST(Leetcode, findMedianSortedArrays)
 	EXPECT_EQ(su.findMedianSortedArrays(VecArr1, VecArr2), 2.5);
 }
 
+
 class Solution_longestPalindrome {
 public:
 	string longestPalindrome(string s) {
-		string tmp;
+		int begin = 0;
+		int end = 0;
 		string maxstr;
-		for (size_t i = 0; i < s.length(); i++)
+		for (int i = 0; i < s.length(); i++)
 		{
-			
-			for (size_t j = i; j < s.length(); j++)
+			int len1 = GetPalindrome(s, i, i);
+			int len2 = GetPalindrome(s, i, i + 1);
+			if (len1 > len2)
 			{
-				tmp = s.substr(i, j - i + 1);
-				if (tmp.length() > maxstr.length() && IsPalindrome(tmp))
-				{
-					maxstr = tmp;
-				}
+				begin = i - len1 / 2;
+				end = i + len1 / 2;
 			}
-
+			else
+			{
+				begin = i - (len2 / 2 - 1);
+				end = i + (len2 / 2 );
+			}
+			if (begin < 0)
+				continue;
+			string tmpstr = s.substr(begin, end - begin + 1);
+			if (maxstr.length() < tmpstr.length())
+				maxstr = tmpstr;
 		}
 		return maxstr;
 	}
-	bool IsPalindrome(string s)
+	int GetPalindrome(string& s, int L, int R)
 	{
-		int l = 0;
-		int r = s.length() - 1;
-		while (l <= r && s[l] == s[r])
+		int l = L;
+		int r = R;
+		while (l >= 0 && r < s.length() && s[l] == s[r])
 		{
-			l++;
-			r--;
+			l--;
+			r++;
 		}
-		if (l > r)
-		{
-			return true;
-		}
-		return false;
+		return r - l - 1;
 	}
 };
-
 TEST(Leetcode, longestPalindrome)
 {
 	Solution_longestPalindrome su;
-	EXPECT_EQ(su.longestPalindrome("babad"), "bab");
-	EXPECT_EQ(su.longestPalindrome("cbbd"), "bb");
+	cout << su.longestPalindrome("cbbd") << endl;
 }
 
 
 class Solution_Zig {
 public:
     string convert(string s, int numRows) {
-        char **Array;
-        int nIndex = 0;
-        int i = 0;
-        int j = 0;
-        bool dir = 1;
-        Array = new char*[numRows];
-        for(int i = 0; i < s.length(); i++)
-        {
-        	Array[i] = new char[s.length()];
-        	memset(Array[i], 0, s.length());
-        } 
-     
-	     for(nIndex=0; nIndex < s.length(); nIndex++)
-	     {
-	     		if(dir)
-	   			{
-	   				Array[i][j] = s[nIndex];
-						j++;
-	   			}	
-	   			if(j == numRows )
-	 				{
-	 					j--;
-	 					dir = 0;
-	 					continue;
-	 				}
-					if(!dir)
-					{	
-						i++;
-						j--;
-	 					Array[i][j] = s[nIndex];
-	 				}
-	 				if(j == 0)
-					{
-						dir = 1;
-						i--;
-						continue;
-					}
-	     } 
-	     string outs;
-	     nIndex = 0;  
-	     for(int m = 0; m < numRows; m++)
-	     {
-	     		for(int n = 0; n < s.length(); n++)
-	     		{
-	     			if(Array[m][n] != 0)
-	     				outs.push_back(Array[m][n]);
-	     		}		
-	     }
-        
-       return outs;
+    	string out;
+       string *sZig = new string[numRows];
+				int nRow = 0;
+				int nIndex = 0;
+       for(int i = 0; i < s.length(); i++)
+       {
+       	
+       	sZig[nRow].push_back(s[i]);
+       	if(numRows == 1)
+       		continue;
+       	if(nRow == 0)
+       	{
+       		nIndex = 1;		
+       	}
+       	if(nRow == numRows - 1)
+       	{
+       		nIndex = -1;
+       	}
+       	nRow += nIndex;    		
+       } 
+       for(int i = 0; i < numRows; i++)
+       {
+       		out.append(sZig[i]);
+       	
+       }
+       	delete []sZig;
+       return out;
     }
 };
 
@@ -529,4 +510,67 @@ TEST(Leetcode, Zig)
 {
 	Solution_Zig su;
 	EXPECT_EQ(su.convert("PAYPALISHIRING", 3), "PAHNAPLSIIGYIR");
+}
+
+
+class Solution_reverse {
+public:
+    int reverse(int x) {
+        long long nres = 0;
+        char c;
+        while(x)
+        {
+        	long long ntemp = nres * 10 + x % 10;
+        	x /= 10;
+        	nres = ntemp;
+        }
+  			if(nres < numeric_limits<int>::min() || nres > numeric_limits<int>::max())
+  				return 0;
+        return nres;
+    }
+};
+
+TEST(Leetcode, reverse)
+{
+	Solution_reverse su;
+	//EXPECT_EQ(su.reverse(123),321);
+	//EXPECT_EQ(su.reverse(-123),-321);
+	EXPECT_EQ(su.reverse(120),21);
+	EXPECT_EQ(su.reverse(1534236469),0);
+}
+
+class Solution_myAtoi {
+public:
+    int myAtoi(string str) {    	
+			int intmax = numeric_limits<int>::max();
+			int intmin = numeric_limits<int>::min();
+			int nret = 1;
+			long long num = 0;
+			int firstnum = str.find_first_not_of(' ');
+			if(str[firstnum] == '+' || str[firstnum] == '-')
+			{
+				nret = str[firstnum++] == '+' ? 1 : -1;
+			}
+			while(firstnum < str.length())
+			{
+				if(str[firstnum] >= '0' && str[firstnum] <= '9')
+				{
+						num = num * 10 + (str[firstnum] - '0');
+						if(num * nret > intmax) return intmax;
+						if(num * nret < intmin) return intmin;
+				}	
+				firstnum++;
+			}
+			return num * nret;
+    }
+};
+
+TEST(Leetcode, myAtoi)
+{
+	Solution_myAtoi su;
+	//EXPECT_EQ(su.myAtoi("42"), 42);
+	//EXPECT_EQ(su.myAtoi("    -42"), -42);
+	//EXPECT_EQ(su.myAtoi("4193 with words"), 4193);
+	//EXPECT_EQ(su.myAtoi("words with 4193"), 4193);
+	EXPECT_EQ(su.myAtoi("-91283472332"), -2147483648);
 }
