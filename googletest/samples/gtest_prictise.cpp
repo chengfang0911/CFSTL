@@ -574,3 +574,28 @@ TEST(Leetcode, myAtoi)
 	//EXPECT_EQ(su.myAtoi("words with 4193"), 4193);
 	EXPECT_EQ(su.myAtoi("-91283472332"), -2147483648);
 }
+
+class Solution_isPalindrome {
+public:
+    bool isPalindrome(int x) {
+    	char buf[16] = {0};
+    	sprintf(buf,"%d", x);
+      string str(buf);
+      int l = 0;
+      int r = str.length()-1;
+      while(l <= r)
+      {
+      	if(str[l++] != str[r--])
+      		return false;	
+      }
+      return true;
+    }
+};
+
+TEST(Leetcode, isPalindrome)
+{
+	Solution_isPalindrome su;
+	EXPECT_TRUE(su.isPalindrome(121));
+	EXPECT_FALSE(su.isPalindrome(-121));
+	EXPECT_FALSE(su.isPalindrome(10));
+}
