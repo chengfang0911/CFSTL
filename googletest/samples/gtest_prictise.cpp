@@ -2,7 +2,8 @@
 #include <stack>
 #include <limits>
 
-#define MAX(a,b) (a) > (b) ? (a) : (b)
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 using namespace std;
 
@@ -598,4 +599,111 @@ TEST(Leetcode, isPalindrome)
 	EXPECT_TRUE(su.isPalindrome(121));
 	EXPECT_FALSE(su.isPalindrome(-121));
 	EXPECT_FALSE(su.isPalindrome(10));
+}
+
+
+
+class Solution_maxArea {
+public:
+    int maxArea(vector<int>& height) {
+        int l = 0;
+        int r = height.size() - 1;
+        int max = 0;
+        while(l < r)
+        {
+        		int temp = (r - l) * MIN(height[r], height[l]);
+        		max = MAX(temp, max);
+        		if(height[l] > height[r])
+        			r--;
+        		else
+        			l++;
+        }
+        return max;
+    }
+};
+
+TEST(Leetcode, maxArea)
+{
+	Solution_maxArea su;
+	int array[] = {2,3,4,5,18,17,6};
+	vector<int> vecArray(array, array + 7);
+	EXPECT_EQ(su.maxArea(vecArray), 17);
+}
+//I             1
+//V             5
+//X             10
+//L             50
+//C             100
+//D             500
+//M             1000
+class Solution_romanToInt {
+public:
+    int romanToInt(string s) {
+        vector<int> Array ;
+        for(int i = 0; i < s.length(); i++)
+        {
+        	if(s[i] == 'I')
+        		Array.push_back(1);
+        	if(s[i] == 'V')
+        		Array.push_back(5);
+        	if(s[i] == 'X')
+        		Array.push_back(10);
+        	if(s[i] == 'L')
+        		Array.push_back(50);
+        	if(s[i] == 'C')
+        		Array.push_back(100);
+        	if(s[i] == 'D')
+        		Array.push_back(500);
+        	if(s[i] == 'M')
+        		Array.push_back(1000);
+        }
+        int sum = 0;
+        for(int i = 0; i < Array.size() - 1; i++)
+        {
+        	if(Array[i] < Array[i + 1])
+        		sum -= Array[i];
+        	else
+        		sum += Array[i];
+        }
+        return sum += Array[Array.size() - 1];
+    }
+};
+
+class Solution_longestCommonPrefix {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        int nVecSize = strs.size();
+        if(nVecSize == 0)
+        	return "";
+        int nIndex = 0;
+        bool bflag = false;
+        for(int n = 0; n < strs[0].length(); n++)
+        {
+        	bflag = true;
+	        for(int i = 1; i < nVecSize; i++)
+	        {
+	        	if(strs[i][n] != strs[0][n])
+		   			{
+	            bflag = false;
+		   				break;
+		   			}
+	        }
+          if(bflag)
+	   				nIndex++;
+          if(!bflag)
+            return string(strs[0], 0, nIndex);
+	      }
+	      return string(strs[0], 0, nIndex);
+    }
+};
+//["flower","flow","flight"]
+
+TEST(Leetcode, longestCommonPrefix)
+{
+	Solution_longestCommonPrefix su;
+	vector<string> vecStr;
+	vecStr.push_back("flower");
+	vecStr.push_back("flow");
+	vecStr.push_back("flight");
+	EXPECT_STREQ(su.longestCommonPrefix(vecStr), "fl");
 }
