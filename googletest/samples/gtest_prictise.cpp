@@ -705,5 +705,5 @@ TEST(Leetcode, longestCommonPrefix)
 	vecStr.push_back("flower");
 	vecStr.push_back("flow");
 	vecStr.push_back("flight");
-	EXPECT_STREQ(su.longestCommonPrefix(vecStr), "fl");
+	EXPECT_STREQ(su.longestCommonPrefix(vecStr).c_str(), "fl");
 }
