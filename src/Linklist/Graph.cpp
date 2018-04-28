@@ -8,5 +8,40 @@
 // TODO: reference any additional headers you need in STDAFX.H
 // and not in this file
 
+CGraph::CGraph()
+{
+
+}
+
+
+CGraph::~CGraph()
+{
+
+}
+
+void CGraph::Init()
+{
+
+}
+
+void CGraph::Clear()
+{
+
+}
+
+bool CGraph::Empty()
+{
+
+}
+
+void CGraph::DFS()//deep first search
+{
+
+}
+
+void CGraph::WFS()//wide first search
+{
+
+}
 
 

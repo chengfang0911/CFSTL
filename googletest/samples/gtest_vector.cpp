@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "../../include/Linklist.h"
+#include "../../include/Graph.h"
 
 using namespace std;
 

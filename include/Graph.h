@@ -14,4 +14,16 @@
 using namespace std;
 
 
+class CGraph
+{
+public:
+	CGraph();
+	~CGraph();
+	void Init();
+	void Clear();
+	bool Empty();
+	void DFS();//deep first search
+	void WFS();//wide first search
+};
+
 // TODO: reference additional headers your program requires here
