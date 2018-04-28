@@ -21,5 +21,8 @@
     <ClCompile Include="..\..\..\..\src\Linklist\LinkList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\Linklist\Graph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
