@@ -139,9 +139,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\Linklist\LinkList.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\..\src\Linklist\LinkList.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
