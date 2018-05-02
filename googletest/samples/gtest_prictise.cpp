@@ -707,3 +707,46 @@ TEST(Leetcode, longestCommonPrefix)
 	vecStr.push_back("flight");
 	EXPECT_STREQ(su.longestCommonPrefix(vecStr).c_str(), "fl");
 }
+
+class Solution_letterCombinations {
+public:
+    vector<string> letterCombinations(string digits) {
+    	string numstring[] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+			vector<string> vecstring(numstring, numstring + 8);
+			vector<string> tmpres;
+			vector<string> res;
+			if (digits.length() == 0)
+				return res;
+			res.push_back("");
+			string tmp;
+			for(int i = 0; i< digits.length(); i++)
+			{
+					int num = digits[i] - '0';
+					if(num >=2 && num <= 9)
+					{
+						num-=2;
+						for(int j = 0; j < vecstring[num].length(); j++)
+						{
+							for(int m = 0; m < res.size(); m++)
+							{
+								tmp = res[m];
+								tmp += vecstring[num][j];
+								tmpres.push_back(tmp);
+							}	
+						}
+						res.clear();
+						res.insert(res.begin(), tmpres.begin(), tmpres.end());
+						tmpres.clear();
+					}
+			}
+			return res;
+    }
+
+};
+
+TEST(Leetcode, letterCombinations)
+{
+	Solution_letterCombinations su;
+	su.letterCombinations("");
+	;
+}
