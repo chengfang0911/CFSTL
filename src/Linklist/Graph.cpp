@@ -31,7 +31,7 @@ void CGraph::Clear()
 
 bool CGraph::Empty()
 {
-
+	return false;
 }
 
 void CGraph::DFS()//deep first search

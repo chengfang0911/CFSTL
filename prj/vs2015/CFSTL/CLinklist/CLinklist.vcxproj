@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\Linklist\Graph.cpp" />
     <ClCompile Include="..\..\..\..\src\Linklist\LinkList.cpp" />
+    <ClCompile Include="..\..\..\..\src\Linklist\Tree.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
