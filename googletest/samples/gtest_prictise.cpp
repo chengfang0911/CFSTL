@@ -599,3 +599,114 @@ TEST(Leetcode, isPalindrome)
 	EXPECT_FALSE(su.isPalindrome(-121));
 	EXPECT_FALSE(su.isPalindrome(10));
 }
+
+class Solution_isMatch {
+public:
+    bool isMatch(string s, string p) {
+		return false;
+    }
+};
+
+TEST(Leetcode, isMatch)
+{
+	Solution_isMatch su;
+	EXPECT_FALSE(su.isMatch("aa","a"));
+}
+
+
+class String
+{
+public:
+	String(const char *str = NULL);
+	String(const String &str);
+	~String();
+	String& operator=(const String &str);
+	String& operator+(const String &str);
+	bool operator==(const String &str);
+	friend ostream& operator<<(ostream &os,const String &str);
+private:
+	char *m_data;
+	int m_nlen;
+};
+
+String::String(const char *str)
+{
+	if (str)
+	{
+		m_nlen = strlen(str);
+		m_data = new char[m_nlen + 1];
+		memset(m_data, 0, m_nlen + 1);
+		memcpy(m_data, str, m_nlen);
+	}
+	else
+	{
+		m_data = NULL;
+		m_nlen = 0;
+	}
+	
+}
+
+String::String(const String &str)
+{
+	m_nlen = str.m_nlen;
+	m_data = new char[m_nlen + 1];
+	memset(m_data, 0, m_nlen + 1);
+	memcpy(m_data, str.m_data, m_nlen);
+}
+
+ostream& operator<<(ostream &os,const String &str)
+{
+	os << str.m_data;
+	return os;
+}
+
+String::~String()
+{
+	if (m_data)
+		delete []m_data;
+	m_nlen = 0;
+}
+
+String& String::operator=(const String &str)
+{
+	if (m_data)
+		delete[]m_data;
+	m_nlen = str.m_nlen;
+	m_data = new char[m_nlen + 1];
+	memset(m_data, 0, m_nlen + 1);
+	memcpy(m_data, str.m_data, m_nlen);
+	return *this;
+}
+
+String& String::operator+(const String &str)
+{
+	int nlen = m_nlen + str.m_nlen;
+	char *buf = new char[nlen + 1];
+	memset(buf, 0, nlen + 1);
+	memcpy(buf, m_data, m_nlen);
+	memcpy(buf + m_nlen, str.m_data, str.m_nlen);
+	delete[]m_data;
+	m_data = buf;
+	m_nlen = nlen;
+	return *this;
+}
+
+bool String::operator==(const String &str)
+{
+	return m_nlen == str.m_nlen ? !memcmp(m_data, str.m_data, m_nlen) : 0;
+}
+
+TEST(Leetcode, string)
+{
+	String str1;
+	String str2("123");
+	String str3(str2);
+	String str4 = str3;
+	cout << str4 <<endl;
+	cout << str2 + str4 << endl;
+	bool b = (str3 == str4);
+
+	b = (str2 == str1);
+	int a;
+	a = 10;
+}
