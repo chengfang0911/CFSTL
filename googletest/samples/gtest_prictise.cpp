@@ -750,3 +750,30 @@ TEST(Leetcode, letterCombinations)
 	su.letterCombinations("");
 	;
 }
+
+class Solution_divide {
+public:
+	int divide(int dividend, int divisor) {
+		if (!divisor || (dividend == INT_MIN && divisor == -1))
+			return INT_MAX;
+		int sign = ((dividend < 0) ^ (divisor < 0)) ? -1 : 1;
+		if (dividend < 0)
+			dividend = -dividend;
+
+		long long dvd = labs(dividend);
+		long long dvs = labs(divisor);
+		int res = 0;
+		while (dvd >= dvs) {
+			dvd -= dvs;
+			res++;
+		}
+		return sign == 1 ? res : -res;
+	}
+};
+
+TEST(Leetcode, divide)
+{
+	Solution_divide su;
+	cout << su.divide(-2147483648, 2) << endl;
+}
+
