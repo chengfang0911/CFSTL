@@ -710,3 +710,52 @@ TEST(Leetcode, string)
 	int a;
 	a = 10;
 }
+
+class FindAll
+{
+public:
+	void GetAllString(string str, set<string>&setstr)
+	{
+		GetAllString(str, setstr, 0);
+	}
+	void GetAllString(string str, set<string>&setstr, int nIndex)
+	{
+		setstr.insert(str);
+		if(setstr.size() == 0)
+		{
+			GetAllString(str, setstr, nIndex);
+			return;
+		}
+		
+		for(int i = nIndex ; i < str.size(); i++)
+		{
+				string strTmp = SwapStr(nIndex, i, str);
+				setstr.insert(strTmp);
+				GetAllString(str, setstr, nIndex+1);
+				GetAllString(strTmp, setstr, nIndex+1);
+		}
+	}
+	string SwapStr(int n, int m, string str)
+	{
+		string strTmp = str;
+		char &a = strTmp[n];
+		char &b = strTmp[m];
+		char tmp = a;
+		a = b;
+		b = tmp;
+		return strTmp;
+	}
+};
+
+TEST(Leetcode, FindAll)
+{
+	FindAll fa;
+	string str = "abc";
+	set<string> setStr;
+	fa.GetAllString(str, setStr);
+	
+	for(set<string>::iterator iter = setStr.begin(); iter != setStr.end(); iter++) 
+  {
+     cout<<*iter<<endl; 
+  }
+}
